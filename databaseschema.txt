@@ -4,14 +4,10 @@
 
 CREATE TABLE IF NOT EXISTS public.raspi
 (
-    home_id integer NOT NULL DEFAULT nextval('raspi_home_id_seq'::regclass),
+    data_ integer NOT NULL DEFAULT nextval('raspi_home_id_seq'::regclass),
     temperature double precision NOT NULL,
-    voltage double precision NOT NULL,
-    amps double precision NOT NULL,
-    watts double precision NOT NULL,
     fan_on_time double precision,
     cost double precision,
-    door boolean,
     fan_speed double precision,
     temp_1 double precision,
     temp_2 double precision,
@@ -37,7 +33,7 @@ CREATE TABLE IF NOT EXISTS public.raspi
     temp_22 double precision,
     temp_23 double precision,
     temp_24 double precision,
-    CONSTRAINT raspi_pkey PRIMARY KEY (home_id)
+    CONSTRAINT raspi_pkey PRIMARY KEY (data_)
 )
 
 TABLESPACE pg_default;
