@@ -2,12 +2,18 @@ from __future__ import division
 import time
 import psycopg2
 from adafruit_motorkit import MotorKit
-import round
+
+# Define kit as a global variable
+kit = MotorKit()
+
+# Rename 'round' variable to avoid conflict with built-in function
+def round_temperature(value):
+    return round(float(value) / 1000.0, 2)
 
 def get_cpu_temperature():
     try:
         with open('/sys/class/thermal/thermal_zone0/temp', 'r') as f:
-            temperature = round(float(f.read()) / 1000.0, 2)  # Round to 2 decimal places
+            temperature = round_temperature(f.read())
         return temperature
     except Exception as e:
         print("Error reading CPU temperature:", e)
@@ -46,17 +52,15 @@ def update_temperature(data, temperature, fan_on_time, minute):
         cursor.execute(f"UPDATE raspi SET {column_name_cost} = %s WHERE data_ = %s", (fan_on_time * 0.1, data))  # Replace 0.1 with the actual cost calculation formula
 
         connection.commit()
-
         connection.close()
+
     except Exception as e:
         print("Error updating data in the database:", e)
 
 def turn_on_fan():
-    kit = MotorKit()
     kit.motor1.throttle = 1  # Turn on the fan at full speed
 
 def turn_off_fan():
-    kit = MotorKit()
     kit.motor1.throttle = 0  # Turn off the fan
 
 def main():
