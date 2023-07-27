@@ -1,0 +1,46 @@
+-- Table: public.raspi
+
+-- DROP TABLE IF EXISTS public.raspi;
+
+CREATE TABLE IF NOT EXISTS public.raspi
+(
+    home_id integer NOT NULL DEFAULT nextval('raspi_home_id_seq'::regclass),
+    temperature double precision NOT NULL,
+    voltage double precision NOT NULL,
+    amps double precision NOT NULL,
+    watts double precision NOT NULL,
+    fan_on_time double precision,
+    cost double precision,
+    door boolean,
+    fan_speed double precision,
+    temp_1 double precision,
+    temp_2 double precision,
+    temp_3 double precision,
+    temp_4 double precision,
+    temp_5 double precision,
+    temp_6 double precision,
+    temp_7 double precision,
+    temp_8 double precision,
+    temp_9 double precision,
+    temp_10 double precision,
+    temp_11 double precision,
+    temp_12 double precision,
+    temp_13 double precision,
+    temp_14 double precision,
+    temp_15 double precision,
+    temp_16 double precision,
+    temp_17 double precision,
+    temp_18 double precision,
+    temp_19 double precision,
+    temp_20 double precision,
+    temp_21 double precision,
+    temp_22 double precision,
+    temp_23 double precision,
+    temp_24 double precision,
+    CONSTRAINT raspi_pkey PRIMARY KEY (home_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.raspi
+    OWNER to postgres;
