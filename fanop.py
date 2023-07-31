@@ -34,7 +34,7 @@ model.J=pyo.Set(initialize= minutes)
 
 # Defining temperature a Variable
 init_dict = {(1):95}
-model.T = pyo.Var(model.J, domain=pyo.NonNegativeReals, bounds = (50, 60), initialize=init_dict)
+model.T = pyo.Var(model.J, domain=pyo.NonNegativeReals, bounds = (74, 77), initialize=init_dict)
 # print(model.T.pprint())
 
 # Defining the decision variable as Variable
