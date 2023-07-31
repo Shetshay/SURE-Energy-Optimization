@@ -52,7 +52,7 @@ model.OBJ = pyo.Objective(expr=obj_expression)
 # # and will decrease by 7 degrees if fan is OFF
 def temperature_dynamics_constraint_rule(model, j):
     if j != 24:
-        return model.T[j+1] == (model.T[j] - 7)*model.x[j] + (model.T[j] + 3)*(1-model.x[j])
+        return model.T[j+1] == (model.T[j] - 8.5)*model.x[j] + (model.T[j] + 8.5)*(1-model.x[j])
     return pyo.Constraint.Skip
 
     
