@@ -7,6 +7,8 @@ from matplotlib import pyplot as plt
 import matplotlib.pyplot as plt
 os.system("clear")
 minutes=np.arange(24) + 1
+print("minutes are:\n",minutes)
+print("first index of minutes is: \n",minutes[0])
 mmo = np.arange(23)+1
 # print("-----------------------------\n")
 # print("t is : \n",t)
@@ -26,15 +28,15 @@ price_data = np.round(price_data,2)
 f = np.array(price_data)
 model.c = pyo.Set(initialize=f)
 model.J=pyo.Set(initialize= minutes)
-# print(model.J.pprint())
+print("The model J is: \n",model.J.pprint())
 
-#print("First element of J is: \n",model.J[1] )
+print("First element of J is: \n",model.J[1] )
 
 
 
 # Defining temperature a Variable
-init_dict = {(1):95}
-model.T = pyo.Var(model.J, domain=pyo.NonNegativeReals, bounds = (74, 77), initialize=init_dict)
+init_dict = {(1):83}
+model.T = pyo.Var(model.J, domain=pyo.NonNegativeReals, bounds = (54, 80), initialize=init_dict)
 # print(model.T.pprint())
 
 # Defining the decision variable as Variable
@@ -45,14 +47,14 @@ def obj_expression(model):
     return sum(model.c[j] * model.x[j] for j in model.J) 
 model.OBJ = pyo.Objective(expr=obj_expression)
 
-# print(model.OBJ.pprint())
+print("The objective function is: \n",model.OBJ.pprint())
 
 # # Defining tempearrure dynamic equation as a constraint. 
 # # The temperature will increase by 3 degrees if fan is ON
 # # and will decrease by 7 degrees if fan is OFF
 def temperature_dynamics_constraint_rule(model, j):
     if j != 24:
-        return model.T[j+1] == (model.T[j] - 8.5)*model.x[j] + (model.T[j] + 8.5)*(1-model.x[j])
+        return model.T[j+1] == (model.T[j] - 7)*model.x[j] + (model.T[j] + 3)*(1-model.x[j])
     return pyo.Constraint.Skip
 
     
@@ -106,43 +108,52 @@ else:
 model.display()
 model.OBJ.display()
 print(model.OBJ.expr())
+print("This is the value of objective function after optimization\n")
+print("This is the value of objecgive function", value(model.OBJ)) #after
+print("ABOVE ME IS THE ANSWER")
+
 print("Printing x results:\n")
 print(model.x.pprint())
-xresults=np.arange(24)
-Tresults=np.arange(24)
+xresults=np.arange(24) + 1
+Tresults=np.arange(24) + 1
 for j in model.J:
-    if j!=24:
-        xresults[j] = model.x[j].value
+    if j!=25:
+        xresults[j-1] = model.x[j].value
+        Tresults[j-1] = model.T[j].value
+        print("j is:",j, "xresult[j] is:", xresults[j-1],"Tresults[j] is: ", Tresults[j-1])
 
-for j in model.J:
-    if j!=24:
-        Tresults[j] = model.T[j].value
+# for j in model.J:
+#     if j!=24:
+#         Tresults[j] = model.T[j].value
 print(Tresults)
 
+# Create the subplots
+fig, axs = plt.subplots(3, 1, figsize=(8, 10))
 
-plt.subplot(311)
-plt.title("ON/OFF Status") 
-plt.xlabel("time step") 
-plt.ylabel("ON/OFF") 
-xt = np.arange(24)+1
-#print(xt)
-plt.bar(xt,xresults)
+# Subplot 1
+axs[0].set_title("ON/OFF Status")
+axs[0].set_xlabel("time step")
+axs[0].set_ylabel("ON/OFF")
+xt = np.arange(24) + 1
+axs[0].bar(xt, xresults)
+axs[0].set_xticks(xt)  # Set the x-axis ticks to 1 to 24
+axs[0].grid()
 
-plt.subplot(312)
-plt.title("Price data") 
-plt.xlabel("time step") 
-plt.ylabel("Price") 
-xt = np.arange(24)+1
-#print(xt)
-plt.bar(xt,f)
+# Subplot 2
+axs[1].set_title("Price data")
+axs[1].set_xlabel("time step")
+axs[1].set_ylabel("Price")
+axs[1].bar(xt, f)
+axs[1].set_xticks(xt)  # Set the x-axis ticks to 1 to 24
+axs[1].grid()
 
+# Subplot 3
+axs[2].set_title("Temperature data")
+axs[2].set_xlabel("time step")
+axs[2].set_ylabel("Temperature")
+axs[2].plot(xt, Tresults)
+axs[2].set_xticks(xt)  # Set the x-axis ticks to 1 to 24
+axs[2].grid()
 
-plt.subplot(313)
-plt.title("Temperature data") 
-plt.xlabel("time step") 
-plt.ylabel("Temperature") 
-xt = np.arange(24)+1
-#print(xt)
-plt.plot(xt,Tresults)
-plt.grid()
+plt.tight_layout()  # Adjust subplots to avoid overlapping labels
 plt.show()
