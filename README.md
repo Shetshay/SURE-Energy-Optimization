@@ -17,5 +17,5 @@
 - ### Constraints
 	- Optimal Control Variable
 
-![SURE POSTER](/Shetshay/SURE-Energy-Optimization/blob/master/SURE-Energy-optimization-poster.pdf)
+![SURE POSTER](/Shetshay/SURE-Energy-Optimization/blob/master/SURE-Energy-optimization-poster-1.png)
 
