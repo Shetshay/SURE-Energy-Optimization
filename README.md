@@ -18,4 +18,5 @@
 	- Optimal Control Variable
 
 ![SURE POSTER](/Shetshay/SURE-Energy-Optimization/blob/master/SURE-Energy-optimization-poster-1.png)
+![SURE POSTER](https://raw.githubusercontent.com/Shetshay/SURE-Energy-Optimization/master/SURE-Energy-optimization-poster-1.png)
 
