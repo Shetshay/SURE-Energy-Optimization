@@ -17,3 +17,6 @@
 - ### Constraints
 	- Optimal Control Variable
 
+![SURE POSTER](https://raw.githubusercontent.com/shethsay/SURE-Energy-Optimization/master/
+SURE-Energy-optimization-poster.pdf)
+
